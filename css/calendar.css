@@ -1,0 +1,84 @@
+.calendar-container {
+    font-size: 1.1rem
+}
+
+.calendar-container td {
+    height: 30px;
+    width: 12.8%;
+    line-height: 30px;
+    position: relative;
+}
+
+.calendar-date-num {
+    display: inline-block;
+    position: relative;
+    z-index: 1000;
+    overflow: hidden;
+    height: 30px;
+    width: 100%
+}
+
+.ui-calendar-title {
+    text-align: center;
+    position: relative;
+    margin-bottom: 20px
+}
+
+.ui-calendar-table {
+    width: 100%;
+    text-align: center
+}
+
+.ui-calendar-prev,
+.ui-calendar-next {
+    position: absolute;
+    width: 13px;
+    height: 21px;
+    top: 10px
+}
+
+.ui-calendar-prev {
+    left: 10px;
+    background: url(../img/ico_11.png) no-repeat 50% 50%;
+    background-size: 10px;
+}
+
+.ui-calendar-next {
+    right: 10px;
+    background: url(../img/ico_10.png) no-repeat 50% 50%;
+    background-size: 10px;
+}
+
+.calendar-active {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    background: #496acc;
+    border-radius: 16px;
+    text-align: center;
+    color: #fff;
+    line-height: 26px;
+}
+
+* {
+    touch-action: none;
+}
+
+.calendar-date-mark {
+    position: absolute;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: #f60;
+    border-radius: 14px;
+    top: -3px;
+    left: 70%;
+    font-size: 10px;
+    color: #fff;
+    line-height: 14px;
+    z-index: 10
+}
+
+.calendar-unable {
+    color: #999
+}
