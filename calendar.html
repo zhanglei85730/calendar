@@ -22,31 +22,49 @@
 
 <script src='js/calendar.js'></script>
 <script>
-    calendar.renderCalendar({
+	
+		var data = [{
+            'date': '2017-09-03',
+            'data': 10
+        },  {
+            'date': '2017-09-05',
+            'data': 5
+        }, {
+            'date': '2017-09-08',
+            'data': 5
+        }]
+		var minD = new Date();
+		var maxD = new Date();
+		maxD.setFullYear(minD.getFullYear()+1)
+	    calendar.renderCalendar({
         calendarContainer: '#calendarBox',
-        //月份从0-11，参数6实际为7月
-        minDate: new Date(2017, 6, 20),
-        maxDate: new Date(2017, 9, 20),
+        //月份从0-11，参数7实际为8月
+        minDate:minD,
+        maxDate:maxD,
         //给日期区间绑定数据
         // dateData: [1, 2, 3, 4, 5, 6, 7, 8]
         dateData: [{
-            'date': '2017-07-21',
+            'date': '2017-08-03',
             'data': 10
         }, {
-            'date': '2017-07-22',
+            'date': '2017-08-10',
             'data': 11
-        }, {
-            'date': '2017-07-26',
-            'data': 5
-        }, {
-            'date': '2017-08-05',
-            'data': 5
         }],
     });
-    calendar.eventHandle(function(date) {
-        //date为点击日期返回的当前日期
-        console.log('回调=' + date + '被你点击了');
-    })
+    calendar.eventHandle(
+		function(date) {
+			//date为点击日期返回的当前日期
+			console.log('回调=' + date + '被你点击了');
+		},
+		//月份改变执行事件
+		function(currYear,currMonth){
+			console.log('月份改变')
+			//data为日期数据
+			calendar.monthData(data);
+			console.log(currYear)
+			console.log(currMonth)
+		}
+	);
 </script>
 
 </html>

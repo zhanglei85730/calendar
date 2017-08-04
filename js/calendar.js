@@ -12,6 +12,7 @@ var calendar = (function($) {
         //自增monthAdd
         //monthAdd,
         //设置
+        i = 0,
         _option = {
             tableClass: 'ui-calendar-table',
             calendarContainer: '#calendar',
@@ -19,6 +20,8 @@ var calendar = (function($) {
             maxDate: false,
             dateData: false,
         };
+    //月份改变当月绑定数据
+
     //返回2位月份数 1月为01，10为10
     function formatMonth(month) {
         return month + 1 < 10 ? '0' + (month + 1) : month + 1;
@@ -143,7 +146,14 @@ var calendar = (function($) {
                             }
                         };
                         if (date == currentDate && _dateMonth == _currentMonth) {
-                            return '<span class="calendar-date-num calendar-active">' + date - 1 + '</span>' + '<span class="calendar-date-mark">' + dateBingData + '</span>\n';
+                            // return '<span class="calendar-date-num calendar-active">' + date - 1 + '</span>' + '<span class="calendar-date-mark">' + dateBingData + '</span>\n';
+                            if (!dateBingData) {
+                                return '<span class="calendar-date-num calendar-active">' + date + '</span>\n';
+                            } else {
+                                return '<span class="calendar-date-num calendar-active">' + date + '</span>' + '<span class="calendar-date-mark">' + dateBingData + '</span>\n';
+                            }
+
+
                         } else {
 
                             if (flag) {
@@ -217,18 +227,22 @@ var calendar = (function($) {
             $(_option.calendarContainer).html('');
         },
         //事件处理
-        eventHandle: function(cb) {
+        eventHandle: function(cb, changeMonthEvent) {
             var _this = this;
             //$calendar = $(_option.$calendarContainer)
 
             function nextMonth() {
+
                 var monthAdd = _this.getCurrMonth();
                 //有设置日期区间
+
                 if (_option.minDate && _option.maxDate) {
-                    if (_this.getCurrMonth() >= _option.minDate.getMonth() && _this.getCurrMonth() < _option.maxDate.getMonth()) {
+                    if (date.getTime() < _option.maxDate.getTime()) {
                         calendar.setCurrMonth(monthAdd + 1)
+                        changeMonthEvent(_this.getCurrYear(), _this.getCurrMonth());
                         calendar.renderMain();
                     };
+
                 } else {
                     calendar.setCurrMonth(monthAdd + 1)
                     calendar.renderMain();
@@ -238,10 +252,11 @@ var calendar = (function($) {
             function prevMonth() {
                 var monthMinus = _this.getCurrMonth();
                 if (_option.minDate && _option.maxDate) {
-                    if (_this.getCurrMonth() > _option.minDate.getMonth() && _this.getCurrMonth() <= _option.maxDate.getMonth()) {
+                    if (date.getTime() > _option.minDate.getTime()) {
                         calendar.setCurrMonth(monthMinus - 1)
+                        changeMonthEvent(_this.getCurrYear(), _this.getCurrMonth());
                         calendar.renderMain();
-                    };
+                    }
                 } else {
                     calendar.setCurrMonth(monthMinus - 1)
                     calendar.renderMain();
@@ -253,6 +268,7 @@ var calendar = (function($) {
             //上一月按钮
             $('.ui-calendar-prev').on('click', function() {
                 prevMonth()
+
             });
             $(_option.calendarContainer).on('click ', '.calendar-date-num', function() {
                 //没有calendar-unable方可点击
@@ -272,6 +288,11 @@ var calendar = (function($) {
             })
 
         },
+        monthData: function(monthData) {
+            console.log('f')
+            _option.dateData = monthData
+
+        }
     };
     return calendar;
     //依赖Zepto或jQuery
